@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Reddit from './util/Reddit';
 import Feed from './Components/Feed/Feed';
 import Layout from './Containers/Layout/Layout';
-
+import Navigation from './Components/Navigation/Navigation';
 
 class App extends Component {
   state =  {
@@ -14,7 +14,14 @@ class App extends Component {
     this.handleSubredditSearch('all')
   }
 
-  handleSubredditSearch = (term) => {
+  handleSubredditSearch = () => {
+    let term;
+    if (this.state.searchTerm === "") {
+      term = 'all';
+    } else {
+      term = this.state.searchTerm;
+    };
+
     Reddit.fetchSubreddit(term).then(result => {
       this.setState({posts: result})
       return
@@ -22,7 +29,7 @@ class App extends Component {
   }
 
   handleSearchInput = (term) => {
-    this.setState({searchTerm: term.target.value})
+    this.setState({searchTerm: term})
   }
 
   render() {
@@ -31,11 +38,15 @@ class App extends Component {
     return (
       <div>
         <Layout>
-          <h1>Lurker Reddit App</h1>
+          {/* <h1>Lurker Reddit App</h1> */}
           {/* display an element for each post */}
           {/* Search bar */}
-          <input value={this.state.searchTerm} onChange={this.handleSearchInput}/>
-          <button onClick={() => this.handleSubredditSearch(this.state.searchTerm)}>Click</button>
+          <Navigation 
+          value={this.state.searchTerm}
+          input={this.handleSearchInput}
+          clicked={this.handleSubredditSearch}
+          />
+          {/* <button onClick={() => this.handleSubredditSearch(this.state.searchTerm)}>Click</button> */}
           <Feed posts={this.state.posts}/>
           {/* <Feed posts={this.handleSubredditSearch()}/> */}
         </Layout>
