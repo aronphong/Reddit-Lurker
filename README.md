@@ -1,3 +1,15 @@
+# Lurker
+
+This app uses React and Reddit JSON data to get and display reddit post!
+
+## Things to do
+* Navigation Bar
+* Search Bar
+* Navigating to subreddits and comment threads
+* Styling
+* Score Display & buttons
+* Utilize Reddit API via OAuth2
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

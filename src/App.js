@@ -1,26 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Reddit from './util/Reddit';
+import Feed from './Components/Feed/Feed';
+import Layout from './Containers/Layout/Layout';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+  state =  {
+    posts: [],
+    searchTerm: ""
+  }
+
+  componentDidMount() {
+    this.handleSubredditSearch('all')
+  }
+
+  handleSubredditSearch = (term) => {
+    Reddit.fetchSubreddit(term).then(result => {
+      this.setState({posts: result})
+      return
+    });
+  }
+
+  handleSearchInput = (term) => {
+    this.setState({searchTerm: term.target.value})
+  }
+
+  render() {
+    
+    
+    return (
+      <div>
+        <Layout>
+          <h1>Lurker Reddit App</h1>
+          {/* display an element for each post */}
+          {/* Search bar */}
+          <input value={this.state.searchTerm} onChange={this.handleSearchInput}/>
+          <button onClick={() => this.handleSubredditSearch(this.state.searchTerm)}>Click</button>
+          <Feed posts={this.state.posts}/>
+          {/* <Feed posts={this.handleSubredditSearch()}/> */}
+        </Layout>
+
+      </div>
+    )
+  }
 }
 
 export default App;
