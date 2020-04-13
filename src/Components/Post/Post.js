@@ -1,5 +1,7 @@
 import React from 'react'
 import styles from './Post.module.css';
+import "../../../node_modules/video-react/dist/video-react.css";
+import { Player } from 'video-react';
 
 const Post = (props) => {
 
@@ -7,7 +9,7 @@ const Post = (props) => {
 
     // if post hint is an image, display the image below the title 
     // 
-
+    console.log(props.post.media)
     const contentType = props.post.hint; 
     let imageDisplay;
 
@@ -20,12 +22,29 @@ const Post = (props) => {
                 alt={props.post.title}
                 />
             </div>
-    } else {
+    } else if (contentType === 'hosted:video') {
+        let redditVideo = props.post.media.reddit_video.scrubber_media_url;
+        console.log(redditVideo)
+
+        imageDisplay = 
+            <div className={styles.video}>
+                <h1>{props.post.title}</h1>
+                <Player
+                playsInline
+                autoPlay
+                fluid={true} 
+                src={redditVideo} 
+                alt={props.post.title}
+                />
+            </div>
+    }
+    else {
         // thumbnail
         imageDisplay = 
             <div className={styles.thumbnail}>
                 <h1>{props.post.title}</h1>
-                <img 
+                <img
+                poster={props.post.thumbnail} 
                 src={props.post.thumbnail} 
                 alt="thumbnail" 
                 />
@@ -43,11 +62,7 @@ const Post = (props) => {
                 <p>Posted by {props.post.author} {props.post.created} ago</p>
                 <p>{props.post.hint}</p>
             </div>
-
-            
             {imageDisplay}
-
-
         </div>
         </a>
     );

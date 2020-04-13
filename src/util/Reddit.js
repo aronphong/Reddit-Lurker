@@ -42,7 +42,7 @@ const Reddit = {
                     hint: post.data.post_hint,
                     author: post.data.author,
                     permalink: post.data.permalink,
-                    
+                    media: post.data.secure_media
                 }))
             };
         } catch (error) {

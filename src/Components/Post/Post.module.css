@@ -89,3 +89,17 @@ a {
     grid-column: 2 / span 4;
     display: inline;
 }
+
+.video {
+    grid-column: 2 / span 5;
+    grid-row: 2 / 4;
+}
+
+.video h1 {
+    grid-column: 2 / span 4;
+    grid-row: 2 / 5;
+    font-size: 1.3em;
+    margin: 5px;
+    font-weight: bold;
+    text-align: left;
+}
