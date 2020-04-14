@@ -2,14 +2,13 @@ import React from 'react'
 import styles from './Post.module.css';
 import "../../../node_modules/video-react/dist/video-react.css";
 import { Player } from 'video-react';
+import { postTime } from "./Time";
 
 const Post = (props) => {
+    const postCreateTime = new Date(props.post.created * 1000);
+    const postedTime = postTime(postCreateTime);
 
-    const time = new Date(props.post.created).toISOString().slice(11, -1);
-
-    // if post hint is an image, display the image below the title 
-    // 
-    console.log(props.post.media)
+    // if post hint is an image, display the media below the title 
     const contentType = props.post.hint; 
     let imageDisplay;
 
@@ -22,10 +21,15 @@ const Post = (props) => {
                 alt={props.post.title}
                 />
             </div>
+    } else if (contentType === 'rich:video') {
+        let redditVideo = props.post.media.oembed.thumbnail_url
+        imageDisplay = 
+            <div className={styles.image}>
+                <h1>{props.post.title}</h1>
+                <img src={redditVideo} alt={props.post.title}/>
+            </div>  
     } else if (contentType === 'hosted:video') {
         let redditVideo = props.post.media.reddit_video.scrubber_media_url;
-        console.log(redditVideo)
-
         imageDisplay = 
             <div className={styles.video}>
                 <h1>{props.post.title}</h1>
@@ -59,7 +63,7 @@ const Post = (props) => {
             </div>
             <div className={styles.PostHeader}>
                 <p>{props.post.subreddit}</p>
-                <p>Posted by {props.post.author} {props.post.created} ago</p>
+                <p>Posted by {props.post.author} {postedTime} ago</p>
                 <p>{props.post.hint}</p>
             </div>
             {imageDisplay}

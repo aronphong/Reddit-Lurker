@@ -37,7 +37,7 @@ const Reddit = {
                     score: post.data.score,
                     thumbnail: post.data.thumbnail,
                     num_comments: post.data.num_comments,
-                    created: post.data.created,
+                    created: post.data.created_utc,
                     url: post.data.url,
                     hint: post.data.post_hint,
                     author: post.data.author,
